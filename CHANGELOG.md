@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.0.3
+* Only export `cjs` module for Sanity
+
 ## v1.0.2
 * Only export `ES` module for Sanity
 
