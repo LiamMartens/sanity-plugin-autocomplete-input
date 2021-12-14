@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.1.1
+* Don't show duplicate options
+
 ## v1.1.0
 * Fixed query issue and minor updates to UI
 

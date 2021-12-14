@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'just-safe-get';
 import compact from 'just-compact';
+import unique from 'just-unique';
 import { useId } from '@reach/auto-id'
 import { Autocomplete, Text, Button, Card } from '@sanity/ui';
 import { StringSchemaType, Path, Marker } from '@sanity/types';
@@ -45,15 +46,16 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
   const [options, setOptions] = React.useState<Option[]>([]);
 
   const optionsList = React.useMemo<(Option & { isNew?: boolean })[]>(() => {
-    const queryInOptions = options.find(({ value }) => value === query);
+    const uniqueOptions = unique(options.map(({ value }) => value), false, true);
+    const queryInOptions = uniqueOptions.find(value => value === query);
     if (!queryInOptions) {
       return [
-        ...options,
+        ...uniqueOptions.map((value) => ({ value })),
         { value: query, isNew: true }
       ]
     }
 
-    return options
+    return uniqueOptions.map((value) => ({ value }));
   }, [query, options])
 
   const errors = React.useMemo(
