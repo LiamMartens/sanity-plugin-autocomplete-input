@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.0.5
+* Included missing `sanity.json` file for npm
+
 ## v1.0.4
 * Switch back to `es` but fix transpilation of unsupported syntax like `?`
 
