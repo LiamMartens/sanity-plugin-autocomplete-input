@@ -6,6 +6,18 @@
   "main": "./lib/index.js",
   "module": "./lib/index.module.js",
   "types": "./lib/index.d.ts",
+  "files": ["lib"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiamMartens/sanity-plugin-autocomplete-input"
+  },
+  "bugs": {
+    "url": "https://github.com/LiamMartens/sanity-plugin-autocomplete-input/issues"
+  },
+  "author": {
+    "name": "Liam Martens",
+    "email": "liam@freighter.studio"
+  },
   "devDependencies": {
     "@parcel/packager-ts": "^2.0.1",
     "@parcel/plugin": "^2.0.1",
