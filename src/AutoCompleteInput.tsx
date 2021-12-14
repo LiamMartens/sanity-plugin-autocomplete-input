@@ -37,7 +37,7 @@ type Props = {
   presence: FormFieldPresence[];
 };
 
-export default React.forwardRef<HTMLInputElement, Props>(function (props, ref) {
+export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(function (props, ref) {
   const { type, level, presence, markers, readOnly, value, onFocus, onBlur, onChange } = props;
   const inputId = useId();
   const [loading, setLoading] = React.useState(true);
