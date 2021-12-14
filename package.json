@@ -1,10 +1,12 @@
 {
   "name": "sanity-plugin-autocomplete-input",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
+  "type": "module",
   "source": "./src/index.ts",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "files": [
     "lib"
   ],
@@ -57,6 +59,7 @@
   },
   "targets": {
     "main": {
+      "outputFormat": "esmodule",
       "includeNodeModules": [
         "just-compact",
         "just-safe-get"
