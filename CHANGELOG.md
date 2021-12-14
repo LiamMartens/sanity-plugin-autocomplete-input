@@ -1,4 +1,7 @@
 # CHANGELOG
 
+## v1.0.2
+* Only export `ES` module for Sanity
+
 ## v1.0.1
 * Fixed typings and input export
