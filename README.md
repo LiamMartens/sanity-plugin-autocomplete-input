@@ -26,6 +26,7 @@ export default {
         params: {
           type: 'page'
         },
+        transform: (values) => values
       },
     }
   ]

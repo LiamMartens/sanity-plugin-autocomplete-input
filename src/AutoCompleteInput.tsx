@@ -20,6 +20,7 @@ type AutocompleteOptions = {
   groq?: {
     query: string;
     params?: any;
+    transform?: (result: any) => Option[]
   };
 }
 
@@ -80,13 +81,14 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
     }
 
     const path = type.options?.autocompleteFieldPath ?? 'title';
-    const { query, params = {} } = type.options?.groq || {
+    const { query, transform, params = {} } = type.options?.groq || {
       query: `*[defined(${path})] { "value": ${path} }`,
     }
 
     sanityClient.fetch(query, params).then((results) => {
       if (Array.isArray(results)) {
-        const compactedValues = compact(results.map((doc) => get(doc, 'value')));
+        const transformedResults = transform ? transform(results) : results
+        const compactedValues = compact(transformedResults.map((doc) => get(doc, 'value')));
         setLoading(false);
         setOptions(compactedValues.map((value) => ({ value: String(value) })));
       }
