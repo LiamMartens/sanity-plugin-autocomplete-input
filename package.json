@@ -4,7 +4,7 @@
   "license": "MIT",
   "source": "./src/index.ts",
   "main": "./lib/index.js",
-  "module": "./lib/index.mjs",
+  "module": "./lib/index.module.js",
   "types": "./lib/index.d.ts",
   "devDependencies": {
     "@parcel/packager-ts": "^2.0.1",
@@ -16,6 +16,7 @@
     "@sanity/form-builder": "^2.23.0",
     "@sanity/types": "^2.23.0",
     "@sanity/ui": "^0.36.17",
+    "@types/node": "^16.11.12",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "parcel": "^2.0.1",
@@ -36,8 +37,7 @@
   },
   "dependencies": {
     "just-compact": "^3.0.1",
-    "just-safe-get": "^4.0.1",
-    "serialize-sanity-path": "^1.0.1"
+    "just-safe-get": "^4.0.1"
   },
   "scripts": {
     "build": "parcel build"
@@ -46,15 +46,13 @@
     "main": {
       "includeNodeModules": [
         "just-compact",
-        "just-safe-get",
-        "serialize-sanity-path"
+        "just-safe-get"
       ]
     },
     "module": {
       "includeNodeModules": [
         "just-compact",
-        "just-safe-get",
-        "serialize-sanity-path"
+        "just-safe-get"
       ]
     }
   }

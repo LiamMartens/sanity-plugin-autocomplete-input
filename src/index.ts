@@ -4,5 +4,5 @@ export { AutoCompleteInput }
 export default {
   type: 'string',
   name: 'autocomplete',
-  input: AutoCompleteInput,
+  inputComponent: AutoCompleteInput,
 }

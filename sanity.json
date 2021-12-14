@@ -6,7 +6,7 @@
   "parts": [
     {
       "implements": "part:@sanity/base/schema-type",
-      "path": "index.mjs"
+      "path": "index.module.js"
     }
   ]
 }

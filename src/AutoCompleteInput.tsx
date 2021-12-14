@@ -8,13 +8,13 @@ import PatchEvent, { set, unset } from '@sanity/form-builder/PatchEvent';
 import { FormFieldPresence } from '@sanity/base/presence';
 import { FormField } from '@sanity/base/components';
 import { getSanityClient } from './utils/getSanityClient';
-import { serializePath } from 'serialize-sanity-path';
 
 type Option = {
   value: string;
 }
 
 type AutocompleteOptions = {
+  autocompleteFieldPath?: string
   options?: Option[];
   groq?: {
     query: string;
@@ -24,9 +24,9 @@ type AutocompleteOptions = {
 
 type Props = {
   type: StringSchemaType & {
-    options: AutocompleteOptions;
+    options?: AutocompleteOptions;
   };
-  focusPath: Path;
+  focusPath?: Path;
   level: number;
   value: string | null | undefined;
   readOnly: boolean | null;
@@ -38,7 +38,7 @@ type Props = {
 };
 
 export default React.forwardRef<HTMLInputElement, Props>(function (props, ref) {
-  const { type, level, presence, markers, focusPath, readOnly, value, onFocus, onBlur, onChange } = props;
+  const { type, level, presence, markers, readOnly, value, onFocus, onBlur, onChange } = props;
   const inputId = useId();
   const [loading, setLoading] = React.useState(true);
   const [options, setOptions] = React.useState<Option[]>([]);
@@ -55,13 +55,13 @@ export default React.forwardRef<HTMLInputElement, Props>(function (props, ref) {
   React.useEffect(() => {
     const sanityClient = getSanityClient();
 
-    if (type.options.options) {
+    if (type.options?.options) {
       setLoading(false);
       setOptions(type.options.options);
     }
 
-    const path = serializePath(focusPath);
-    const { query, params = {} } = type.options.groq || {
+    const path = type.options?.autocompleteFieldPath ?? 'title';
+    const { query, params = {} } = type.options?.groq || {
       query: `*[defined(${path})] { "value": ${path} }`,
     }
 
@@ -85,13 +85,13 @@ export default React.forwardRef<HTMLInputElement, Props>(function (props, ref) {
     >
       <Autocomplete
         ref={ref}
-        id={inputId}
+        id={inputId ?? ''}
         customValidity={errors.length > 0 ? errors[0].item.message : ''}
-        readOnly={readOnly}
+        readOnly={readOnly ?? false}
         loading={loading}
         disabled={loading}
         options={options}
-        value={value}
+        value={value ?? ''}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={handleChange}

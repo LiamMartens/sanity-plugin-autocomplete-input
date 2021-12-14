@@ -3,7 +3,7 @@ This plugin is similar to the [Autocomplete Tags Plugin](https://www.sanity.io/p
 
 ## Usage
 You can just use it as a schema type. To customize the autocomplete list you have 3 options:
-1. Use the default, in which case the plugin will look for documents with a matching field name and use aggregate any previously used values.
+1. Specify the `autocompleteFieldPath` option, which the plugin will use to look for documents with the same field path to aggregate the option values.
 2. Manually specify options in the schema option
 3. Specify your own GROQ query returning a `[{ "value": "foobar" }]` format
 
@@ -13,6 +13,8 @@ export default {
     {
       name: 'autocomplete-input',
       type: 'autocomplete',
+      // specify field path
+      autocompleteFieldPath: 'title',
       // manually specify options
       options: [
         { value: 'Option 1' },
