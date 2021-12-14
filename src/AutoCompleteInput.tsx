@@ -2,7 +2,7 @@ import React from 'react';
 import get from 'just-safe-get';
 import compact from 'just-compact';
 import { useId } from '@reach/auto-id'
-import { Autocomplete } from '@sanity/ui';
+import { Autocomplete, Text, Button, Card } from '@sanity/ui';
 import { StringSchemaType, Path, Marker } from '@sanity/types';
 import PatchEvent, { set, unset } from '@sanity/form-builder/PatchEvent';
 import { FormFieldPresence } from '@sanity/base/presence';
@@ -41,12 +41,29 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
   const { type, level, presence, markers, readOnly, value, onFocus, onBlur, onChange } = props;
   const inputId = useId();
   const [loading, setLoading] = React.useState(true);
+  const [query, setQuery] = React.useState('');
   const [options, setOptions] = React.useState<Option[]>([]);
+
+  const optionsList = React.useMemo<(Option & { isNew?: boolean })[]>(() => {
+    const queryInOptions = options.find(({ value }) => value === query);
+    if (!queryInOptions) {
+      return [
+        ...options,
+        { value: query, isNew: true }
+      ]
+    }
+
+    return options
+  }, [query, options])
 
   const errors = React.useMemo(
     () => markers.filter((marker) => marker.type === 'validation' && marker.level === 'error'),
     [markers]
   )
+
+  const handleQueryChange = React.useCallback((query: string) => {
+    setQuery(query);
+  }, [])
 
   const handleChange = React.useCallback((value: string) => {
     onChange(PatchEvent.from(value ? set(value) : unset()))
@@ -90,11 +107,21 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
         readOnly={readOnly ?? false}
         loading={loading}
         disabled={loading}
-        options={options}
+        options={optionsList}
         value={value ?? ''}
         onFocus={onFocus}
         onBlur={onBlur}
         onChange={handleChange}
+        onQueryChange={handleQueryChange}
+        renderOption={(option) => (
+          <Card as="button" padding={3} tone={option.isNew ? 'primary' : 'default'} shadow={1}>
+            {option.isNew ? (
+              <Text>Create new option "{option.value}"</Text>
+            ) : (
+              <Text>{option.value}</Text>
+            )}
+          </Card>
+        )}
       />
     </FormField>
   );

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.1.0
+* Fixed query issue and minor updates to UI
+
 ## v1.0.6
 * Fixed `sanity.json` pointing to wrong js file
 
