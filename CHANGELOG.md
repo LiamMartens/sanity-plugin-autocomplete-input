@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.0.6
+* Fixed `sanity.json` pointing to wrong js file
+
 ## v1.0.5
 * Included missing `sanity.json` file for npm
 
