@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.3.0
+* Explose both `es` and `cjs` modules
+
 ## v1.2.0
 * Don't show duplicate options
 
