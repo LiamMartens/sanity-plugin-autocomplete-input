@@ -1,7 +1,7 @@
 # sanity-plugin-autocomplete-input
 [![https://img.shields.io/npm/v/sanity-plugin-autocomplete-input](https://img.shields.io/npm/v/sanity-plugin-autocomplete-input)](https://www.npmjs.com/package/sanity-plugin-autocomplete-input)
 
-![./docs/img/example.gif](./docs/img/example.gif)
+![example](https://raw.githubusercontent.com/LiamMartens/sanity-plugin-autocomplete-input/main/docs/img/example.gif)
 
 
 This plugin is similar to the [Autocomplete Tags Plugin](https://www.sanity.io/plugins/autocomplete-tags), but it acts as a single text input as opposed to an array of tags. The input can also be customized to change the autocomplete options.
