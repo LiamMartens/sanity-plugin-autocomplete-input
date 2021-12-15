@@ -1,5 +1,5 @@
 # sanity-plugin-autocomplete-input
-![https://img.shields.io/npm/v/sanity-plugin-autocomplete-input](https://img.shields.io/npm/v/sanity-plugin-autocomplete-input)
+[![https://img.shields.io/npm/v/sanity-plugin-autocomplete-input](https://img.shields.io/npm/v/sanity-plugin-autocomplete-input)](https://www.npmjs.com/package/sanity-plugin-autocomplete-input)
 
 ![./docs/img/example.gif](./docs/img/example.gif)
 
