@@ -18,21 +18,23 @@ export default {
     {
       name: 'autocomplete-input',
       type: 'autocomplete',
-      // specify field path
-      autocompleteFieldPath: 'title',
-      // manually specify options
-      options: [
-        { value: 'Option 1' },
-        { value: 'Option 2' }
-      ],
-      // specify custom groq query
-      groq: {
-        query: '*[_type == $type] { "value": title }',
-        params: {
-          type: 'page'
+      options: {
+        // specify field path
+        autocompleteFieldPath: 'title',
+        // manually specify options
+        options: [
+          { value: 'Option 1' },
+          { value: 'Option 2' }
+        ],
+        // specify custom groq query
+        groq: {
+          query: '*[_type == $type] { "value": title }',
+          params: {
+            type: 'page'
+          },
+          transform: (values) => values
         },
-        transform: (values) => values
-      },
+      }
     }
   ]
 }
