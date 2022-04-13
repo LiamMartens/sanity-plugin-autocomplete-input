@@ -1,32 +1,35 @@
 import React from 'react';
+import pick from 'just-pick';
 import get from 'just-safe-get';
 import compact from 'just-compact';
 import unique from 'just-unique';
 import { useId } from '@reach/auto-id'
-import { Autocomplete, Text, Button, Card } from '@sanity/ui';
+import { Autocomplete, Text, Card } from '@sanity/ui';
 import { StringSchemaType, Path, Marker } from '@sanity/types';
 import PatchEvent, { set, unset } from '@sanity/form-builder/PatchEvent';
 import { FormFieldPresence } from '@sanity/base/presence';
 import { FormField } from '@sanity/base/components';
 import { getSanityClient } from './utils/getSanityClient';
+import { SanityDocument } from '@sanity/client';
 
 type Option = {
   value: string;
 }
 
-type AutocompleteOptions = {
+type AutocompleteOptions<Parent = Record<string, unknown>, Params = Record<string, unknown>> = {
   autocompleteFieldPath?: string
+  disableNew?: boolean
   options?: Option[];
   groq?: {
     query: string;
-    params?: any;
+    params?: Params | ((parent?: Parent) =>Params);
     transform?: (result: any) => Option[]
   };
 }
 
-type Props = {
+type Props<Parent = Record<string, unknown>, Params = Record<string, unknown>> = {
   type: StringSchemaType & {
-    options?: AutocompleteOptions;
+    options?: AutocompleteOptions<Parent, Params>;
   };
   focusPath?: Path;
   level: number;
@@ -37,19 +40,21 @@ type Props = {
   onBlur?: () => void;
   markers: Marker[];
   presence: FormFieldPresence[];
+  parent?: Parent
 };
 
 export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(function (props, ref) {
-  const { type, level, presence, markers, readOnly, value, onFocus, onBlur, onChange } = props;
+  const { type, level, presence, markers, readOnly, value, parent, onFocus, onBlur, onChange } = props;
   const inputId = useId();
   const [loading, setLoading] = React.useState(true);
   const [query, setQuery] = React.useState('');
   const [options, setOptions] = React.useState<Option[]>([]);
 
+  const canCreateNew = React.useMemo(() => type.options?.disableNew !== true, [type])
   const optionsList = React.useMemo<(Option & { isNew?: boolean })[]>(() => {
     const uniqueOptions = unique(options.map(({ value }) => value), false, true);
     const queryInOptions = uniqueOptions.find(value => value === query);
-    if (!queryInOptions) {
+    if (!queryInOptions && canCreateNew) {
       return [
         ...uniqueOptions.map((value) => ({ value })),
         { value: query, isNew: true }
@@ -57,7 +62,7 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
     }
 
     return uniqueOptions.map((value) => ({ value }));
-  }, [query, options])
+  }, [query, options, canCreateNew])
 
   const errors = React.useMemo(
     () => markers.filter((marker) => marker.type === 'validation' && marker.level === 'error'),
@@ -78,21 +83,25 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
     if (type.options?.options) {
       setLoading(false);
       setOptions(type.options.options);
-    }
-
-    const path = type.options?.autocompleteFieldPath ?? 'title';
-    const { query, transform, params = {} } = type.options?.groq || {
-      query: `*[defined(${path})] { "value": ${path} }`,
-    }
-
-    sanityClient.fetch(query, params).then((results) => {
-      if (Array.isArray(results)) {
-        const transformedResults = transform ? transform(results) : results
-        const compactedValues = compact(transformedResults.map((doc) => get(doc, 'value')));
-        setLoading(false);
-        setOptions(compactedValues.map((value) => ({ value: String(value) })));
+    } else {
+      const path = type.options?.autocompleteFieldPath ?? 'title';
+      const { query, transform, params = {} } = type.options?.groq || {
+        query: `*[defined(${path})] { "value": ${path} }`,
       }
-    })
+
+      const resolvedParams = typeof params === 'function'
+        ? params(parent)
+        : params
+
+      sanityClient.fetch(query, resolvedParams).then((results) => {
+        if (Array.isArray(results)) {
+          const transformedResults = transform ? transform(results) : results
+          const compactedValues = compact(transformedResults.map((doc) => get(doc, 'value')));
+          setLoading(false);
+          setOptions(compactedValues.map((value) => ({ value: String(value) })));
+        }
+      })
+    }
   }, [type.options]);
 
   return (
@@ -120,7 +129,8 @@ export const AutoCompleteInput = React.forwardRef<HTMLInputElement, Props>(funct
         renderOption={(option) => (
           <Card as="button" padding={3} tone={option.isNew ? 'primary' : 'default'} shadow={1}>
             {option.isNew ? (
-              <Text>Create new option "{option.value}"</Text>
+              canCreateNew &&
+                <Text>Create new option "{option.value}"</Text>
             ) : (
               <Text>{option.value}</Text>
             )}
