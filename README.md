@@ -21,6 +21,8 @@ export default {
       options: {
         // specify field path
         autocompleteFieldPath: 'title',
+        // this option can be used to disable using "new" values
+        disableNew: false,
         // manually specify options
         options: [
           { value: 'Option 1' },
@@ -33,6 +35,27 @@ export default {
             type: 'page'
           },
           transform: (values) => values
+        },
+      }
+    }
+  ]
+}
+```
+
+### Advanced GROQ parameters
+It is also possible to refer to the current parent value (for a top-level field this would be the current document) by passing a function to the `params` option:
+```javascript
+export default {
+  fields: [
+    {
+      name: 'autocomplete-input',
+      type: 'autocomplete',
+      options: {
+        groq: {
+          query: '*[_id != $docId]',
+          params: (parent) => ({
+            docId: parent?._id
+          }),
         },
       }
     }

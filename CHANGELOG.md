@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.4.0
+* [#3](https://github.com/LiamMartens/sanity-plugin-autocomplete-input/issues/3) Added `disableNew` option similar to the native `Reference` type to disallow creating new options inline.
+* [#1](https://github.com/LiamMartens/sanity-plugin-autocomplete-input/issues/1) A new option was added to resolve additional GROQ params from the parent value.
+* [#2](https://github.com/LiamMartens/sanity-plugin-autocomplete-input/issues/2) The options behavior has been updated to not fetch the GROQ query if options was already defined.
+
 ## v1.3.1
 * Fixed docs on how to specify options
 
