@@ -10,7 +10,6 @@ import PatchEvent, { set, unset } from '@sanity/form-builder/PatchEvent';
 import { FormFieldPresence } from '@sanity/base/presence';
 import { FormField } from '@sanity/base/components';
 import { getSanityClient } from './utils/getSanityClient';
-import { SanityDocument } from '@sanity/client';
 
 type Option = {
   value: string;
