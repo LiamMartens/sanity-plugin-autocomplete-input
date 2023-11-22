@@ -1,7 +1,9 @@
-import { AutoCompleteInput } from './AutoCompleteInput';
-export * from './AutoCompleteInput';
-export default {
-  type: 'string',
-  name: 'autocomplete',
-  inputComponent: AutoCompleteInput,
-}
+import { definePlugin } from "sanity";
+import { autocompleteString } from "./schemas/autocompleteString";
+
+export const autocompletInput = definePlugin({
+  name: "sanity-plugin-autocomplete-input",
+  schema: {
+    types: [autocompleteString],
+  },
+});

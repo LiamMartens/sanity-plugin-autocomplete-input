@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./lib",
     "module": "ESNext",
     "target": "ES2015",
     "moduleResolution": "node",
     "declaration": true,
-    "emitDeclarationOnly": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
     "strictNullChecks": true,
     "jsx": "react",
     "lib": [
@@ -22,6 +25,7 @@
     "./**/*.tsx"
   ],
   "exclude": [
+    "lib",
     "node_modules"
   ]
 }
