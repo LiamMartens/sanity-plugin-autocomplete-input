@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-autocomplete-input",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "license": "MIT",
   "type": "module",
   "types": "./lib/index.d.ts",
@@ -14,8 +14,7 @@
   },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "files": [
-    "lib",
-    "sanity.json"
+    "lib"
   ],
   "repository": {
     "type": "git",
