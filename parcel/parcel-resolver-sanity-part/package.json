@@ -1,7 +1,0 @@
-{
-  "name": "parcel-resolver-sanity-part",
-  "version": "0.0.0",
-  "engines": {
-    "parcel": "2.x"
-  }
-}
