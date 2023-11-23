@@ -11,14 +11,8 @@ import {
   unset,
   useClient,
   useFormBuilder,
-  useFormValue,
 } from "sanity";
 import type { InputOptions, Option } from "./types";
-// import { StringSchemaType, Path, Marker } from "@sanity/types";
-// import PatchEvent, { set, unset } from "@sanity/form-builder/PatchEvent";
-// import { FormFieldPresence } from "@sanity/base/presence";
-// import { FormField } from "@sanity/base/components";
-// import { getSanityClient } from "./utils/getSanityClient";
 
 export type AutocompleteSchemaType = Omit<StringSchemaType, "options"> & {
   options?: StringSchemaType["options"] & InputOptions;
@@ -85,7 +79,7 @@ export const AutoCompleteInput = (props: InputProps) => {
         }
       });
     }
-  }, [schemaType.options]);
+  }, [query, schemaType.options]);
 
   return (
     <Autocomplete
