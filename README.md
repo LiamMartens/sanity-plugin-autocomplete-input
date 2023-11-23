@@ -1,4 +1,5 @@
 # sanity-plugin-autocomplete-input
+*Note: the main branch is now a V3 plugin. For V2 checkout v1.x*
 
 [![https://img.shields.io/npm/v/sanity-plugin-autocomplete-input](https://img.shields.io/npm/v/sanity-plugin-autocomplete-input)](https://www.npmjs.com/package/sanity-plugin-autocomplete-input)
 
